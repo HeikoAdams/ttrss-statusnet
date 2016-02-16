@@ -11,7 +11,7 @@ class statusnet extends Plugin {
 
 	function about() {
 		return array(1.0,
-			"Share articles on status.net sites",
+			"Share articles on StatusNet/GNUSocial sites",
 			"Heiko Adams");
 	}
 
@@ -31,7 +31,7 @@ class statusnet extends Plugin {
 		$rv = "<img src=\"plugins/statusnet/statusnet.png\"
 			class='tagsPic' style=\"cursor : pointer\"
 			onclick=\"shareArticleTostatusnet($article_id)\"
-			title='".__('Share on identi.ca')."'>";
+			title='".__('Share on StatusNet/GNUSocial')."'>";
 
 		return $rv;
 	}
@@ -58,7 +58,7 @@ class statusnet extends Plugin {
 	function hook_prefs_tab($args) {
 		if ($args != "prefPrefs") return;
 
-		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__("Status.net settings")."\">";
+		print "<div dojoType=\"dijit.layout.AccordionPane\" title=\"".__("StatusNet/GNUSocial settings")."\">";
 
 		print "<br/>";
 
@@ -82,7 +82,7 @@ print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"op
 print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"method\" value=\"save\">";
 print "<input dojoType=\"dijit.form.TextBox\" style=\"display : none\" name=\"plugin\" value=\"statusnet\">";
 print "<table width=\"100%\" class=\"prefPrefsList\">";
-print "<tr><td width=\"40%\">".__("Status.net URL")."</td>";
+print "<tr><td width=\"40%\">".__("StatusNet/GNUSocial URL")."</td>";
 print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"status_url\" regExp='^(http|https)://.*' value=\"$status_url\"></td></tr>";
 	print "</table>";
 	print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".__("Save")."</button>";
