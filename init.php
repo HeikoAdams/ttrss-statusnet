@@ -12,7 +12,7 @@ class statusnet extends Plugin {
 	function about() {
 		return array(1.0,
 			"Share articles on status.net sites",
-			"fox");
+			"Heiko Adams");
 	}
 
 	function save() {
