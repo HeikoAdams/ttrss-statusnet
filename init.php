@@ -28,7 +28,7 @@ class statusnet extends Plugin {
 	function hook_article_button($line) {
 		$article_id = $line["id"];
 
-		$rv = "<img src=\"plugins/statusnet/statusnet.png\"
+		$rv = "<img src=\"".basename(dirname(dirname(__FILE__)))."/statusnet/statusnet.png\"
 			class='tagsPic' style=\"cursor : pointer\"
 			onclick=\"shareArticleTostatusnet($article_id)\"
 			title='".__('Share on StatusNet/GNUSocial')."'>";
