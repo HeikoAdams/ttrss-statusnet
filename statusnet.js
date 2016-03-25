@@ -16,9 +16,16 @@ function shareArticleTostatusnet(id) {
 				var ti = JSON.parse(transport.responseText);
 
 				if (ti.status_type){
-					var share_url = ti.status_url+"/index.php?action=bookmarkpopup&_=" + ts +
-					"&title=" + param_escape(ti.title + ' ' + ti.link) +
-					"&url=" + param_escape(ti.link);
+					if (ti.status_nameurl){
+						var share_url = ti.status_url+"/index.php?action=bookmarkpopup&_=" + ts +
+						"&title=" + param_escape(ti.title + ' ' + ti.link) +
+						"&url=" + param_escape(ti.link);
+					} else {
+						var share_url = ti.status_url+"/index.php?action=bookmarkpopup&_=" + ts +
+						"&title=" + param_escape(ti.title) +
+						"&url=" + param_escape(ti.link);
+					}
+
 				} else {
 					var share_url = ti.status_url+"/index.php?action=newnotice&_=" + ts +
 					"&status_textarea=" + param_escape(ti.title + ' ' + ti.link);

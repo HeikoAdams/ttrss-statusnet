@@ -18,9 +18,13 @@ class statusnet extends Plugin {
 	function save() {
 		$status_url = db_escape_string($_POST["status_url"]);
 		$this->host->set($this, "status_url", $status_url);
-		$status_type = db_escape_string($_POST["status_type"]);
+
+		$status_type = $_POST["status_type"];
 		$this->host->set($this, "status_type", $status_type);
-		echo "Value Status.net URL set to $status_url<br/>";
+
+		$status_nameurl = $_POST["status_nameurl"];
+		$this->host->set($this, "status_nameurl", $status_nameurl);
+		echo "Status.net/GNUSocial settings saved<br/>";
 	}
 
 	function get_js() {
@@ -53,9 +57,11 @@ class statusnet extends Plugin {
 
 		$status_url = $this->host->get($this, "status_url");
 		$status_type = $this->host->get($this, "status_type");
+		$status_nameurl = $this->host->get($this, "status_nameurl");
 
 		print json_encode(array("title" => $title, "link" => $article_link,
-			"id" => $id, "status_url" => $status_url, "status_type" => $status_type));
+			"id" => $id, "status_url" => $status_url, "status_type" => $status_type,
+			"status_nameurl" => $status_nameurl));
 	}
 
 	function hook_prefs_tab($args) {
@@ -67,6 +73,15 @@ class statusnet extends Plugin {
 
 		$status_url = $this->host->get($this, "status_url");
 		$status_type = $this->host->get($this, "status_type");
+		$status_nameurl = $this->host->get($this, "status_nameurl");
+
+		if ($status_type == "on"){
+			$cbvalue_type = "checked";
+		}
+		if ($status_nameurl == "on"){
+			$cbvalue_nulr = "checked";
+		}
+
 		print "<form dojoType=\"dijit.form.Form\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -90,7 +105,9 @@ class statusnet extends Plugin {
 		print "<tr><td width=\"40%\">".__("StatusNet/GNUSocial URL")."</td>";
 		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"status_url\" regExp='^(http|https)://.*' value=\"$status_url\"></td></tr>";
 		print "<tr><td width=\"40%\">".__("Status als Lesezeichen posten")."</td>";
-		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.CheckBox\" checked name=\"status_type\" regExp='^(http|https)://.*' value=\"$status_url\"></td></tr>";
+		print "<td class=\"prefValue\"><input type=\"checkbox\" $cbvalue_type dojoType=\"dijit.form.CheckBox\" name=\"status_type\" value=\"$status_type\"></td></tr>";
+		print "<tr><td width=\"40%\">".__("URL zum Namen des Lesezeichen hinzufügen")."</td>";
+		print "<td class=\"prefValue\"><input type=\"checkbox\" $cbvalue_nulr dojoType=\"dijit.form.CheckBox\" name=\"status_nameurl\" value=\"$status_nameurl\"></td></tr>";
 		print "</table>";
 		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".__("Save")."</button>";
 
