@@ -15,9 +15,14 @@ function shareArticleTostatusnet(id) {
 			onComplete: function(transport) {
 				var ti = JSON.parse(transport.responseText);
 
-				var share_url = ti.status_url+"/index.php?action=bookmarkpopup&_=" + ts +
-				"&title=" + param_escape(ti.title + ' ' + ti.link) +
-				"&url=" + param_escape(ti.link);
+				if (ti.status_type){
+					var share_url = ti.status_url+"/index.php?action=bookmarkpopup&_=" + ts +
+					"&title=" + param_escape(ti.title + ' ' + ti.link) +
+					"&url=" + param_escape(ti.link);
+				} else {
+					var share_url = ti.status_url+"/index.php?action=newnotice&_=" + ts +
+					"&status_textarea=" + param_escape(ti.title + ' ' + ti.link);
+				}
 
 				w.location.href = share_url;
 			} 

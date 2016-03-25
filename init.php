@@ -18,6 +18,8 @@ class statusnet extends Plugin {
 	function save() {
 		$status_url = db_escape_string($_POST["status_url"]);
 		$this->host->set($this, "status_url", $status_url);
+		$status_type = db_escape_string($_POST["status_type"]);
+		$this->host->set($this, "status_type", $status_type);
 		echo "Value Status.net URL set to $status_url<br/>";
 	}
 
@@ -28,7 +30,7 @@ class statusnet extends Plugin {
 	function hook_article_button($line) {
 		$article_id = $line["id"];
 
-		$rv = "<img src=\"".basename(dirname(dirname(__FILE__)))."/statusnet/statusnet.png\"
+		$rv = "<img src=\"".basename(dirname(__DIR__))."/statusnet/statusnet.png\"
 			class='tagsPic' style=\"cursor : pointer\"
 			onclick=\"shareArticleTostatusnet($article_id)\"
 			title='".__('Share on StatusNet/GNUSocial')."'>";
@@ -50,9 +52,10 @@ class statusnet extends Plugin {
 		}
 
 		$status_url = $this->host->get($this, "status_url");
+		$status_type = $this->host->get($this, "status_type");
 
 		print json_encode(array("title" => $title, "link" => $article_link,
-			"id" => $id, "status_url" => $status_url));
+			"id" => $id, "status_url" => $status_url, "status_type" => $status_type));
 	}
 
 	function hook_prefs_tab($args) {
@@ -63,6 +66,7 @@ class statusnet extends Plugin {
 		print "<br/>";
 
 		$status_url = $this->host->get($this, "status_url");
+		$status_type = $this->host->get($this, "status_type");
 		print "<form dojoType=\"dijit.form.Form\">";
 
 		print "<script type=\"dojo/method\" event=\"onSubmit\" args=\"evt\">
@@ -85,6 +89,8 @@ class statusnet extends Plugin {
 		print "<table width=\"100%\" class=\"prefPrefsList\">";
 		print "<tr><td width=\"40%\">".__("StatusNet/GNUSocial URL")."</td>";
 		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.ValidationTextBox\" required=\"1\" name=\"status_url\" regExp='^(http|https)://.*' value=\"$status_url\"></td></tr>";
+		print "<tr><td width=\"40%\">".__("Status als Lesezeichen posten")."</td>";
+		print "<td class=\"prefValue\"><input dojoType=\"dijit.form.CheckBox\" checked name=\"status_type\" regExp='^(http|https)://.*' value=\"$status_url\"></td></tr>";
 		print "</table>";
 		print "<p><button dojoType=\"dijit.form.Button\" type=\"submit\">".__("Save")."</button>";
 
